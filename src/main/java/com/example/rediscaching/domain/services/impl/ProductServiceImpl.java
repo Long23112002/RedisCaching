@@ -46,8 +46,8 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Caching(
-          put = {@CachePut(value = "product", key = "#result.id")},
-          evict = {@CacheEvict(value = "products", allEntries = true)})
+      put = {@CachePut(value = "product", key = "#result.id")},
+      evict = {@CacheEvict(value = "products", allEntries = true)})
   public ProductResponse createProduct(ProductDto productDto) {
     Product product = modelMapper.map(productDto, Product.class);
     Product savedProduct = productRepository.save(product);
@@ -58,8 +58,8 @@ public class ProductServiceImpl implements ProductService {
   @Override
   @Transactional
   @Caching(
-          put = {@CachePut(value = "product", key = "#id")},
-          evict = {@CacheEvict(value = "products", allEntries = true)})
+      put = {@CachePut(value = "product", key = "#id")},
+      evict = {@CacheEvict(value = "products", allEntries = true)})
   public ProductResponse updateProduct(Long id, ProductDto productDto) {
     Product product = productRepository.findById(id).orElseThrow();
     modelMapper.map(productDto, product);
@@ -70,8 +70,8 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @CacheEvict(
-          value = {"product", "products"},
-          key = "#id")
+      value = {"product", "products"},
+      key = "#id")
   public MessageResponse deleteProduct(Long id) {
     productRepository.deleteById(id);
     logger.info("Deleted product with id: {}", id);
